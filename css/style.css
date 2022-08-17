@@ -1,0 +1,58 @@
+main {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+section {
+    box-sizing: border-box;
+}
+
+.row-1 {
+    min-height: 180px;
+    margin-bottom: 15px;
+}
+
+section#professional {
+    background-color: #459dc4;
+    color: white;
+    padding: 20px;
+}
+
+.headshot {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 180px;
+}
+
+.headshot img {
+    max-height: 100%;
+    border-radius: 15px;
+}
+
+h1 {
+    padding: 0 0 10px 0;
+    margin: 0;
+    font-weight: 300;
+}
+
+.professional-title {
+    text-decoration: underline;
+    font-size: 1.25em;
+    padding: 12px 0;
+}
+
+p {
+    max-width: none;
+    line-height: 1.5em;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+li {
+    padding: 10px 0;
+}
