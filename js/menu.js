@@ -5,11 +5,10 @@ let Menu = {
         m.appendChild(this.build());
     },
     links: [
-        { href: "index.html", text: "Traditional" },
-        { href: "index.html", text: "Functional" },
-        { href: "shop-owner.html", text: "Shop Owner" },
-        { href: "ski-instructor.html", text: "Ski Instructor" },
-        { href: "index.html", text: "Builder" }
+        { href: "index.html", text: "Resume" },
+        { href: "builder.html", text: "Builder" },
+        { href: "education.html", text: "Education" },
+        { href: "skills.html", text: "Skills" },
     ],
     build: function() {
         var ul = document.createElement("ul");

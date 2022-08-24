@@ -1,0 +1,51 @@
+<form name="education">
+
+    <div class="form-group">
+        <label for="education-institution">Institution</label>
+        <input type="text" name="institution" id="education-institution" value="">
+    </div>
+
+    <div class="form-group">
+        <label for="question-start-year">What year did you start at the school?</label>
+        <input type="button" name="start-year" value="2000">
+        <input type="button" name="start-year" value="2001">
+        <input type="button" name="start-year" value="2002">
+        <input type="button" name="start-year" value="2003">
+        <input type="button" name="start-year" value="2004">
+        <input type="button" name="start-year" value="2005">
+        <input type="button" name="start-year" value="2006">
+    </div>
+
+    <div class="form-group">
+        <label for="institution-start-date">Start Date</label>
+        <input type="date" id="institution-start-date" />
+    </div>
+    <div class="form-group">
+        <label for="institution-end-date">End Date</label>
+        <input type="date" id="institution-end-date" />
+    </div>
+
+    <div class="form-group">
+        <button type="button">Save</button>
+    </div>
+
+    <script>
+        var isd = document.getElementById("institution-start-date");
+        var now = new Date().toJSON().slice(0, 10);
+        isd.max = now;
+
+        function setEndMinMax() {
+            var d = new Date(document.getElementById("institution-start-date").value);
+            var ied = document.getElementById("institution-end-date");
+            ied.min = d.toJSON().slice(0, 10);
+            var f = new Date(d);
+            f.setFullYear(f.getFullYear() + 7);
+            ied.max = f.toJSON().slice(0, 10);
+            ied.value = d.toJSON().slice(0, 10);
+        }
+
+        isd.addEventListener("input", function() {
+            setEndMinMax()
+        });
+    </script>
+</form>

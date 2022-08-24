@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Josh Shirley Resume</title>
+    <meta title="" content="">
+    <meta name="description" content="">
+    <meta name="author" content="Josh Shirley">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+    <meta property="og:title" content="Joshua Shirley Resume">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://JSResume.co">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="image.png">
+
+    <link rel="icon" href="media/favicon/favicon.ico">
+
+    <link rel="apple-touch-icon" href="media/favicon/apple-touch-icon.png">
+
+    <!-- External stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/structure.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- <link rel="stylesheet" href="css/style.css?v=1.0"> -->
+
+    <!-- Pre Load Javascripts -->
+    <script type="text/javascript" src="json/states.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">Curriculum Vitae</a>
+            </div>
+
+            <nav class="menu" id="mainMenu">
+                <!-- Edit links in the menu.js file -->
+            </nav>
+
+            <div class="hamburger" id="activateMenu" onclick="Menu.toggle();">
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+
+            <script src="js/menu.js"></script>
+        </div>
+    </header>
+
+    <main>
+
+        <section id="personal">
+            <form name="personal">
+
+                <h3>Personal Information</h3>
+
+                <div class="form-group"></div>
+                <label for="personal-first-name">First Name</label>
+                <input type="text" class="form-control" id="personal-first-name" name="personal-first-name" aria-describedby="first name" placeholder="jose">
+                </div>
+
+                <div class="form-group"></div>
+                <label for="personal-last-name">Last Name</label>
+                <input type="text" class="form-control" id="personal-last-name" name="personal-last-name" aria-describedby="last name" placeholder="samuel">
+                </div>
+
+                <div class="form-group"></div>
+                <label for="personal-email">Email</label>
+                <input type="text" class="form-control" id="personal-email" name="personal-email" aria-describedby="email" placeholder="email@jo.com">
+                </div>
+
+                <div class="form-group"></div>
+                <label for="personal-phone">Phone Number</label>
+                <input type="text" class="form-control" id="personal-phone" name="personal-phone" aria-describedby="phone" placeholder="(808) 642-4653" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9.]/g, '');">
+                </div>
+
+                <div class="form-group"></div>
+                <label for="social-github">GitHub</label>
+                <input type="text" class="form-control" id="social-github" name="social-github" aria-describedby="Github Code URL Link" placeholder="https://github.com/jose-samuel">
+                </div>
+
+                <div class="form-group"></div>
+                <label for="personal-website">Personal Webstie</label>
+                <input type="text" class="form-control" id="personal-website" name="personal-website" aria-describedby="Website URL Link" placeholder="https://windsurfutah.com">
+                </div>
+
+                <div class="form-group"></div>
+                <input type="submit" name="personal-update" id="personal-update" value="Save">
+                </div>
+
+            </form>
+        </section>
+
+        <section id="professional-information">
+            <form name="Professional Data">
+
+                <h3>Professional Information</h3>
+
+                <div class="form-group">
+                    <label for="professional-title">Professional Title</label>
+                    <input type="text" class="form-control" id="professional-title" name="professional-title" aria-describedby="Professional Title" placeholder="Ski Instructor">
+                </div>
+
+                <div class="form-group">
+                    <label for="personal-statement">Personal Statement</label>
+                    <input type="text" class="form-control" id="personal-statement" name="personal-statement" aria-describedby="Personal Statement" placeholder="Enter a personal statement here">
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" name="professional-update" id="professional-update" value="Save">
+                </div>
+            </form>
+        </section>
+
+        <section id="education">
+            <form name="education">
+                <h3>Education</h3>
+
+                <fieldset id="institution-1">
+
+                    <legend>Institution 1</legend>
+
+                    <div class="form-group">
+                        <label for="institution-1-name">Institution</label>
+                        <input type="text" class="form-control" id="institution-1-name" name="name" aria-describedby="Institution name" placeholder="School of Rock">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="institution-1-location">Location</label>
+                        <input type="text" class="form-control" id="institution-1-location" name="location" aria-describedby="This institution is located here" placeholder="Cleveland">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="institution-1-degree">Degree</label>
+                        <input type="text" class="form-control" id="institution-1-degree" name="degree" aria-describedby="Degree" placeholder="BS Computer Science">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="institution-1-start-date">Start Date</label>
+                        <input type="date" class="form-control" id="institution-1-start-date" name="date-start">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="institution-1-end-date">End Date</label>
+                        <input type="date" class="form-control" id="institution-1-end-date" name="date-end">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="button" class="form-control" id="institution-1-save" name="save" value="Save" onclick="saveInstitution(this.id);">
+                    </div>
+
+                </fieldset>
+
+                <div class="form-group" id="school-add">
+                    <button class="form-control" id="institution-add">Add Another Institution</button>
+                </div>
+
+            </form>
+        </section>
+
+        <section id="skills">
+            <form name="skills">
+
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container ">
+            <div class="row ">
+                <div class="col-12 ">
+                    <p class="version alignCenter ">Current Version: <span id="versionNumber ">1.00</span></p>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-12 ">
+                    <p class="copyright alignCenter ">Copyright &copy; <span id="copyrightYear">2022</span>, Joshua Shirley</p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Final Load Javascripts -->
+    <!-- Majority of js code should go here -->
+    <script src="js/footer.js "></script>
+
+    <script src="js/data-object.js"></script>
+    <script src="js/form-builder.js "></script>
+    <!--
+        Requirements should only be used on the settings page.
+    <script src="js/requirements.js "></script>
+    -->
+
+    <!-- Inessential Optional Add Ons -->
+    <script src="js/scrollTopButton.js "></script>
+
+</body>
+
+</html>

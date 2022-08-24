@@ -162,6 +162,17 @@ footer {
     display: block;
 }
 
+.full-screen {
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 100%;
+    padding: 100px 50px 50px 50px;
+    display: block;
+    position: fixed;
+    top: 63px;
+    left: 0px;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -292,14 +303,10 @@ footer {
 }
 
 @media screen and (min-width: 1200px) {
-    main {
-        width: var(--xl);
-    }
-    footer {
-        width: var(--xl);
-    }
+    main,
+    footer,
     header .container {
-        width: var(--xl);
+        width: calc( var(--xl) - 40px);
         margin: 0 auto;
     }
 }

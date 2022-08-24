@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Josh Shirley Resume</title>
+    <meta title="" content="">
+    <meta name="description" content="">
+    <meta name="author" content="Josh Shirley">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+    <meta property="og:title" content="Joshua Shirley Resume">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://JSResume.co">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="image.png">
+
+    <link rel="icon" href="media/favicon/favicon.ico">
+
+    <link rel="apple-touch-icon" href="media/favicon/apple-touch-icon.png">
+
+    <!-- External stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/structure.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .close {
+            color: grey;
+            background-color: transparent;
+            position: fixed;
+            right: 60px;
+            top: 139px;
+            padding: 8px 14px;
+            font-weight: bold;
+        }
+    </style>
+
+    <!-- Pre Load Javascripts -->
+    <script src="js/data-object.js"></script>
+    <script src="js/localStorage.js"></script>
+    <script>
+        cv.init();
+    </script>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">Curriculum Vitae</a>
+            </div>
+
+            <nav class="menu" id="mainMenu">
+                <!-- Edit links in the menu.js file -->
+            </nav>
+
+            <div class="hamburger" id="activateMenu" onclick="Menu.toggle();">
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+
+            <script src="js/menu.js"></script>
+        </div>
+    </header>
+
+    <main>
+
+        <section id="skills">
+            <form name="skills" id="skill-form">
+                <input type="hidden" name="skill-id" id="skill-id" value="0">
+
+                <h3>Skills</h3>
+
+                <div class="form-group">
+                    <label for="skill-name">New Skill</label>
+                    <input type="text" class="form-control" id="skill-name" name="skill-name" aria-describedby="Add new skill">
+                </div>
+
+                <!-- Novice , Competent, Experienced, Master / Expert -->
+
+                <div class="form-group">
+                    <input type="radio" class="btn-check" id="skill-level-1" name="skill-level" value="novice" checked>
+                    <label class="btn" for="skill-level-1">Novice</label>
+
+                    <input type="radio" class="btn-check" id="skill-level-2" name="skill-level" value="competent">
+                    <label class="btn" for="skill-level-2">Competent</label>
+
+                    <input type="radio" class="btn-check" id="skill-level-3" name="skill-level" value="experienced">
+                    <label class="btn" for="skill-level-3">Experienced</label>
+
+                    <input type="radio" class="btn-check" id="skill-level-4" name="skill-level" value="expert">
+                    <label class="btn" for="skill-level-4">Expert / Master</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="skill-experience">Experience (years)</label>
+                    <input type="number" class="form-control" id="skill-experience" name="skill-experience" min="0" max="50">
+                </div>
+
+                <div class="form-group">
+                    <label for="skill-description">Description (Additional Information)</label>
+                    <textarea class="form-control" id="skill-description" name="skill-description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <h4>Tags</h4>
+                    <div class="tags" id="tags"></div>
+                </div>
+
+                <div class="form-group">
+                    <input type="button" class="btn" name="Save" id="skill-save" value="Save">
+                </div>
+            </form>
+        </section>
+
+        <script>
+            document.getElementById("skill-save")
+                .addEventListener("click", function() {
+                    saveNewSkill();
+                });
+
+            function saveNewSkill() {
+
+                // Skill Id
+                var id = Number(document.getElementById("skill-id").value) || 0;
+
+                // Skill Name
+                var name = document.getElementById("skill-name").value;
+
+                // Skill Level
+                var level = document.querySelector("input[name='skill-level']:checked").value;
+
+                // Skill Experience
+                var experience = document.getElementById("skill-experience").value;
+
+                // Skill Description
+                var description = document.getElementById("skill-description").value;
+
+                // Skill Tags
+                var tags = document.querySelectorAll("input[name='skill-tag']:checked");
+
+                // Build the object to be added
+                var obj = {};
+                obj.skill = name;
+                obj.level = cv.skills.level(level);
+                obj.experience = experience;
+                obj.description = description;
+                if (tags.length > 0) {
+                    obj.tags = new Array;
+                    tags.forEach(tag => {
+                        obj.tags.push(tag.id.replace("skill-", ""));
+                    });
+                }
+
+                cv.skills.new(obj);
+            }
+
+            function skillsUpdate() {
+                // collect the object
+                const obj = cv.skills.load();
+
+                // input skill id
+                document.getElementById("skill-id").value = obj.id;
+
+                // input skill name
+                document.getElementById("skill-name").value = obj.skill;
+
+                // input skill level
+                var skillLevel = cv.skills.levels[obj.level];
+                document.querySelectorAll("input[name='skill-level']").forEach(input => {
+                    input.value == skillLevel ? input.checked = true : "";
+                });
+
+                // input skill experience
+                document.getElementById("skill-experience").value = obj.experience;
+
+                // input skill description
+                if (obj.description != undefined) {
+                    document.getElementById("skill-description").value = obj.description;
+                };
+
+                // input skill tags
+                var arr = [];
+                cv.obj.tags.forEach(tag => {
+                    arr.push(tag.tag);
+                });
+                document.querySelectorAll("input[name='skill-tag']").forEach(input => {
+                    if (arr.includes(input.value)) {
+                        input.checked = true;
+                    }
+                });
+
+            }
+        </script>
+
+        <section id="new-tag-form" class="full-screen hide">
+            <button type="button" class="btn close" onclick="cv.tags.formView();">X</button>
+            <form name="newTag">
+
+                <div class="form-group">
+                    <label for="tag-new">New Tag</label>
+                    <input type="text" class="form-control" id="tag-new" name="tag-new">
+                </div>
+
+                <div class="form-group">
+                    <input type="button" class="btn" id="tag-submit" value="Save">
+                </div>
+
+            </form>
+            <script>
+                document.getElementById("tag-submit")
+                    .addEventListener("click", function(e) {
+                        formNewTag();
+                        event.preventDefault();
+                    });
+
+                var n = document.forms.newTag;
+                n.addEventListener("keypress", function(event) {
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+                        formNewTag();
+                    }
+                });
+
+                function formNewTag() {
+                    var v = document.getElementById("tag-new");
+                    // use object method to add new Tag
+                    cv.tags.newTag(v.value);
+
+                    // use object method to refresh tag list
+                    var n = document.getElementById("tags");
+                    cv.tags.viewTags(n);
+
+                    // close the form
+                    cv.tags.formView();
+
+                    // Reset the form
+                    v.value = "";
+                }
+
+                var n = document.getElementById("tags");
+                cv.tags.viewTags(n);
+            </script>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container ">
+            <div class="row ">
+                <div class="col-12 ">
+                    <p class="version alignCenter ">Current Version: <span id="versionNumber ">1.00</span></p>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-12 ">
+                    <p class="copyright alignCenter ">Copyright &copy; <span id="copyrightYear">2022</span>, Joshua Shirley</p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Final Load Javascripts -->
+    <!-- Majority of js code should go here -->
+    <script src="js/footer.js "></script>
+
+    <!--
+        Requirements should only be used on the settings page.
+    <script src="js/requirements.js "></script>
+    -->
+
+    <!-- Inessential Optional Add Ons -->
+    <script src="js/scrollTopButton.js "></script>
+
+</body>
+
+</html>
