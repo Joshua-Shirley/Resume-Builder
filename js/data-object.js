@@ -32,21 +32,12 @@ const cv = {
             language: "English",
             proficiency: "Native"
         }],
-        skills: [{
-            id: 1,
-            skill: "Classic ASP",
-            level: 4,
-            experience: "10 years",
-            tags: [1]
-        }, ],
-        tags: [{
-            id: 1,
-            tag: "Programming"
-        }]
+        skills: []
     },
 
     init: function() {
         storage.load();
+        this.skills.load();
     },
 
     skills: {
@@ -64,17 +55,40 @@ const cv = {
             return obj;
         },
 
-        new: function(obj) {
-            if (this.indexOfName(obj.skill) === -1) {
-                var n = {};
-                n.id = this.nextId();
-                n.skill = obj.skill;
-                n.level = this.level(obj.level);
-                n.experience = obj.experience;
-                n.description = obj.description;
-                n.tags = Number(JSON.parse(JSON.stringify(obj.tags)));
-                cv.obj.skills.push(n);
+        save: function(obj) {
+
+            // format the obj
+            obj = this.format(obj);
+
+            // update a current array object
+            if (obj.id > 0) {
+                // get the array index
+                var index = this.indexOfId(obj.id);
+                cv.obj.skills[index] = obj;
+                storage.save();
             }
+
+            // add a new array object
+            if (this.indexOfName(obj.skill) === -1) {
+                cv.obj.skills.push(n);
+                storage.save();
+            }
+
+        },
+
+        format: function(obj) {
+            // Arrange the object in a specific order
+            var n = {};
+            n.id = this.nextId();
+            n.skill = obj.skill;
+            n.level = this.level(obj.level);
+            n.experience = obj.experience;
+            n.description = obj.description;
+            var arr = [];
+            //n.tags = Number(JSON.parse(JSON.stringify(obj.tags)));
+            obj.tags.forEach(tag => { arr.push(Number(tag)) });
+            n.tags = arr;
+            return n;
         },
 
         delete: function(id) {
@@ -160,7 +174,8 @@ const cv = {
         },
         viewTags: function(element) {
             element.innerText = "";
-            cv.obj.tags.forEach(
+            const tags = this.sortTags();
+            tags.forEach(
                 tag => {
                     var id = "skill-" + tag.id;
                     // checkbox
@@ -179,6 +194,22 @@ const cv = {
                 .addEventListener("click", function() {
                     cv.tags.formView();
                 });
+        },
+        sortTags: function() {
+            var tags = cv.obj.tags.sort((a, b) => {
+                let fa = a.tag.toLowerCase();
+                let fb = b.tag.toLowerCase();
+
+                if (fa < fb) {
+                    return -1;
+                }
+
+                if (fa > fb) {
+                    return 1;
+                }
+                return 0;
+            });
+            return tags;
         },
         formView: function() {
             var n = document.getElementById("new-tag-form");

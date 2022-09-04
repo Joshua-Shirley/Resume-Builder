@@ -9,6 +9,7 @@ let Menu = {
         { href: "builder.html", text: "Builder" },
         { href: "education.html", text: "Education" },
         { href: "skills.html", text: "Skills" },
+        { href: "tags.html", text: "Tags" }
     ],
     build: function() {
         var ul = document.createElement("ul");

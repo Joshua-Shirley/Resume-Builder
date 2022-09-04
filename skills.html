@@ -39,9 +39,77 @@
             padding: 8px 14px;
             font-weight: bold;
         }
+        
+        .skill {
+            border: 1px solid whitesmoke;
+            border-radius: 8px;
+            padding: 8px 24px;
+            background-color: whitesmoke;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .edit {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: transparent;
+            border-color: transparent;
+            color: #0161ad;
+            white-space: nowrap;
+        }
+        
+        .icon {
+            max-height: .9rem;
+            margin-right: 6px;
+            filter: invert(26%) sepia(29%) saturate(3990%) hue-rotate(186deg) brightness(101%) contrast(102%);
+        }
+        
+        button.highlight {
+            margin-left: 20px;
+            border-color: #90d0eec7;
+            background-color: #71c2eb57;
+            color: #0b63a8;
+            box-shadow: #c8e3f1 0 0 5px 3px;
+            font-size: 12px;
+        }
+        
+        button.expert {
+            color: white;
+            border-color: #00000045;
+            background-color: #00000078;
+            box-shadow: #00000057 0 0 5px 5px;
+        }
+        
+        button.experienced {
+            color: white;
+            border-color: #c80f01;
+            background-color: #f22617;
+            box-shadow: #fb7a71 0 0 5px 5px;
+        }
+        
+        button.competent {
+            color: white;
+            border-color: #0792d0;
+            background-color: #03a9f4;
+            box-shadow: #03a9f4 0 0 5px 5px;
+        }
+        
+        button.novice {
+            color: #f8f1b5;
+            border-color: #37933b;
+            background-color: #4caf50;
+            box-shadow: #6acc6e 0 0 5px 5px;
+        }
+        
+        .tags>.btn {
+            margin-right: 6px;
+            font-size: 0.75em;
+        }
     </style>
 
     <!-- Pre Load Javascripts -->
+    <script src="js/general.js"></script>
     <script src="js/data-object.js"></script>
     <script src="js/localStorage.js"></script>
     <script>
@@ -75,183 +143,93 @@
 
     <main>
 
-        <section id="skills">
-            <form name="skills" id="skill-form">
-                <input type="hidden" name="skill-id" id="skill-id" value="0">
+        <section id="pageMenu" class="row">
+            <a href="new-skill.html" class="btn">Add a New Skill</a>
+        </section>
 
-                <h3>Skills</h3>
-
-                <div class="form-group">
-                    <label for="skill-name">New Skill</label>
-                    <input type="text" class="form-control" id="skill-name" name="skill-name" aria-describedby="Add new skill">
-                </div>
-
-                <!-- Novice , Competent, Experienced, Master / Expert -->
-
-                <div class="form-group">
-                    <input type="radio" class="btn-check" id="skill-level-1" name="skill-level" value="novice" checked>
-                    <label class="btn" for="skill-level-1">Novice</label>
-
-                    <input type="radio" class="btn-check" id="skill-level-2" name="skill-level" value="competent">
-                    <label class="btn" for="skill-level-2">Competent</label>
-
-                    <input type="radio" class="btn-check" id="skill-level-3" name="skill-level" value="experienced">
-                    <label class="btn" for="skill-level-3">Experienced</label>
-
-                    <input type="radio" class="btn-check" id="skill-level-4" name="skill-level" value="expert">
-                    <label class="btn" for="skill-level-4">Expert / Master</label>
-                </div>
-
-                <div class="form-group">
-                    <label for="skill-experience">Experience (years)</label>
-                    <input type="number" class="form-control" id="skill-experience" name="skill-experience" min="0" max="50">
-                </div>
-
-                <div class="form-group">
-                    <label for="skill-description">Description (Additional Information)</label>
-                    <textarea class="form-control" id="skill-description" name="skill-description"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <h4>Tags</h4>
-                    <div class="tags" id="tags"></div>
-                </div>
-
-                <div class="form-group">
-                    <input type="button" class="btn" name="Save" id="skill-save" value="Save">
-                </div>
-            </form>
+        <section id="skills" class="row">
         </section>
 
         <script>
-            document.getElementById("skill-save")
-                .addEventListener("click", function() {
-                    saveNewSkill();
+            if (cv.skills.id > 0) {
+                document.getElementById("skills").classList.add("hide");
+            }
+
+            function displaySkills() {
+                var target = document.getElementById("skills");
+                cv.obj.skills.forEach(skill => {
+                    var b = skillBlock(skill);
+                    target.appendChild(b);
                 });
+            }
 
-            function saveNewSkill() {
+            function skillBlock(skill) {
 
-                // Skill Id
-                var id = Number(document.getElementById("skill-id").value) || 0;
+                // Create the div block
+                var div = document.createElement("div");
+                div.id = "skill-" + skill.id;
+                div.classList.add("skill");
 
                 // Skill Name
-                var name = document.getElementById("skill-name").value;
+                var h3 = document.createElement("H3");
+                h3.innerText = skill.skill;
+                div.appendChild(h3);
 
                 // Skill Level
-                var level = document.querySelector("input[name='skill-level']:checked").value;
+                var btnLevel = document.createElement("button");
+                btnLevel.classList.add("btn");
+                btnLevel.classList.add("highlight");
+                btnLevel.classList.add(cv.skills.levels[skill.level]);
+                btnLevel.type = "button";
+                btnLevel.disabled = true;
+                btnLevel.innerText = cv.skills.levels[skill.level].toProperCase();
+                h3.appendChild(btnLevel);
 
-                // Skill Experience
-                var experience = document.getElementById("skill-experience").value;
+                // Description
+                var description = document.createElement("p");
+                description.classList.add("description");
+                description.innerText = skill.description;
+                div.appendChild(description);
 
-                // Skill Description
-                var description = document.getElementById("skill-description").value;
+                // Tags
+                var tags = document.createElement("div");
+                tags.classList.add("tags");
+                div.appendChild(tags);
 
-                // Skill Tags
-                var tags = document.querySelectorAll("input[name='skill-tag']:checked");
-
-                // Build the object to be added
-                var obj = {};
-                obj.skill = name;
-                obj.level = cv.skills.level(level);
-                obj.experience = experience;
-                obj.description = description;
-                if (tags.length > 0) {
-                    obj.tags = new Array;
-                    tags.forEach(tag => {
-                        obj.tags.push(tag.id.replace("skill-", ""));
+                // Tag Buttons
+                if (skill.tags != null) {
+                    skill.tags.forEach(id => {
+                        var arr = cv.obj.tags.filter(tag => tag.id == id);
+                        var tag = arr[0];
+                        var btn = document.createElement("button");
+                        btn.classList.add("btn");
+                        btn.type = "button";
+                        btn.disabled = true;
+                        btn.value = tag.id;
+                        btn.innerText = tag.tag;
+                        tags.appendChild(btn);
                     });
                 }
 
-                cv.skills.new(obj);
+                // Edit Button
+                var edit = document.createElement("a");
+                edit.href = "new-skill.html?id=" + skill.id;
+                var svg = document.createElement("img");
+                svg.src = "media/pen-to-square-solid.svg";
+                svg.classList.add("icon");
+                edit.appendChild(svg);
+                var text = document.createTextNode("Edit");
+                edit.appendChild(text);
+                edit.classList.add("btn");
+                edit.classList.add("edit");
+                div.appendChild(edit);
+
+                return div;
             }
 
-            function skillsUpdate() {
-                // collect the object
-                const obj = cv.skills.load();
-
-                // input skill id
-                document.getElementById("skill-id").value = obj.id;
-
-                // input skill name
-                document.getElementById("skill-name").value = obj.skill;
-
-                // input skill level
-                var skillLevel = cv.skills.levels[obj.level];
-                document.querySelectorAll("input[name='skill-level']").forEach(input => {
-                    input.value == skillLevel ? input.checked = true : "";
-                });
-
-                // input skill experience
-                document.getElementById("skill-experience").value = obj.experience;
-
-                // input skill description
-                if (obj.description != undefined) {
-                    document.getElementById("skill-description").value = obj.description;
-                };
-
-                // input skill tags
-                var arr = [];
-                cv.obj.tags.forEach(tag => {
-                    arr.push(tag.tag);
-                });
-                document.querySelectorAll("input[name='skill-tag']").forEach(input => {
-                    if (arr.includes(input.value)) {
-                        input.checked = true;
-                    }
-                });
-
-            }
+            displaySkills();
         </script>
 
-        <section id="new-tag-form" class="full-screen hide">
-            <button type="button" class="btn close" onclick="cv.tags.formView();">X</button>
-            <form name="newTag">
-
-                <div class="form-group">
-                    <label for="tag-new">New Tag</label>
-                    <input type="text" class="form-control" id="tag-new" name="tag-new">
-                </div>
-
-                <div class="form-group">
-                    <input type="button" class="btn" id="tag-submit" value="Save">
-                </div>
-
-            </form>
-            <script>
-                document.getElementById("tag-submit")
-                    .addEventListener("click", function(e) {
-                        formNewTag();
-                        event.preventDefault();
-                    });
-
-                var n = document.forms.newTag;
-                n.addEventListener("keypress", function(event) {
-                    if (event.keyCode == 13) {
-                        event.preventDefault();
-                        formNewTag();
-                    }
-                });
-
-                function formNewTag() {
-                    var v = document.getElementById("tag-new");
-                    // use object method to add new Tag
-                    cv.tags.newTag(v.value);
-
-                    // use object method to refresh tag list
-                    var n = document.getElementById("tags");
-                    cv.tags.viewTags(n);
-
-                    // close the form
-                    cv.tags.formView();
-
-                    // Reset the form
-                    v.value = "";
-                }
-
-                var n = document.getElementById("tags");
-                cv.tags.viewTags(n);
-            </script>
-        </section>
 
     </main>
 
